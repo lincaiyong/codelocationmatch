@@ -1,8 +1,10 @@
 package codelocationmatch
 
 import (
+	"fmt"
 	"regexp"
 	"strconv"
+	"strings"
 )
 
 func ParseLocations(s string, filePathPattern *regexp.Regexp) []*Location {
@@ -45,4 +47,12 @@ func NewLocation(filePath string, lineNo int) *Location {
 type Location struct {
 	filePath string
 	lineNo   int
+}
+
+func LocationsToString(s []*Location) string {
+	var sb strings.Builder
+	for _, location := range s {
+		sb.WriteString(fmt.Sprintf("%s:%d\n", location.filePath, location.lineNo))
+	}
+	return strings.TrimSpace(sb.String())
 }
